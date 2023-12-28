@@ -31,3 +31,26 @@ const crearBaraja = () => {
 }
 
 crearBaraja();
+
+const pedirCarta = () => {
+    // carta = baraja.pop();
+
+    if ( baraja.length === 0) {
+        throw 'No hay cartas en la baraja.'
+    }
+
+    let numDeCartas = []; 
+    for ( i = 0;  i <= baraja.length - 1; i++) {
+        numDeCartas.push(i);
+    }
+
+    numDeCartas = _.shuffle(numDeCartas);
+
+    carta = baraja[numDeCartas[0]];
+    
+    baraja.splice(numDeCartas[0], 1);
+
+    return carta;
+}
+
+pedirCarta();
