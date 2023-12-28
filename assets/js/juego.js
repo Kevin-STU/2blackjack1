@@ -54,3 +54,14 @@ const pedirCarta = () => {
 }
 
 pedirCarta();
+
+// Función para saber qué valor tiene una carta
+
+const valorCarta = (carta) => {
+    const valor = carta.substring(0, carta.length - 1); // Remover la última letra y solo tomar el resto, o sea tomar el primer valor de la carta.
+
+    return (!isNaN(valor)) ? valor * 1 : (valor === 'A') ? 11 : 10; // Retorna los puntos dependiendo de si es un valor númerico o una letra.
+}
+const valor = valorCarta( pedirCarta() );
+console.log(valor);
+
