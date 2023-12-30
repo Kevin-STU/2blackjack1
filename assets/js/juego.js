@@ -14,6 +14,8 @@ const btnPedir = document.querySelector('#btnPedir');
 let puntosUsuario = 0,
     puntosComputador = 0;
 const smallPuntosUsuario = document.querySelector('#smallUsuario'); 
+const divCartasUsuarioImgs = document.querySelector('#jugador-cartas');
+const divCartasComputadorImgs = document.querySelector('#computador-cartas');
 
 // Función para la creación de una nueva baraja
 const crearBaraja = () => {
@@ -78,5 +80,21 @@ btnPedir.addEventListener('click', () => {
     puntosUsuario = puntosUsuario + valorCarta( carta );
     console.log(puntosUsuario);
     smallPuntosUsuario.textContent = puntosUsuario + ' pts';
+    const imgCarta = document.createElement('img');
+    imgCarta.src = `assets/cartas/${ carta }.png`
+    imgCarta.className = 'carta';
+    // imgCarta.classList.add('carta');
+
+    if ( puntosUsuario > 21) {
+        console.warn('Lo siento mucho, perdiste');
+        btnPedir.disabled = true;
+    } else if ( puntosUsuario === 21 ) {
+        console.warn('21, ganaste')
+        btnPedir.disabled = true;
+    }
+
+    divCartasUsuarioImgs.append(imgCarta);
 
 });
+
+
