@@ -14,8 +14,10 @@ const btnPedir = document.querySelector('#btnPedir');
 let puntosUsuario = 0,
     puntosComputador = 0;
 const smallPuntosUsuario = document.querySelector('#smallUsuario'); 
+const smallPuntosComputador = document.querySelector('#smallComputador'); 
 const divCartasUsuarioImgs = document.querySelector('#jugador-cartas');
 const divCartasComputadorImgs = document.querySelector('#computador-cartas');
+const btnParar = document.querySelector('#btnParar');
 
 // Función para la creación de una nueva baraja
 const crearBaraja = () => {
@@ -72,6 +74,42 @@ const valorCarta = (carta) => {
 const valor = valorCarta( pedirCarta() );
 console.log(valor);
 
+const turnoComputadora = ( puntosMinimos ) => {
+
+    do {
+        const carta = pedirCarta();
+        puntosComputador = puntosComputador + valorCarta( carta );
+        smallPuntosComputador.textContent = puntosComputador + ' pts';
+        const imgCarta = document.createElement('img')
+        imgCarta.src = `assets/cartas/${ carta }.png`;
+        imgCarta.className = 'carta';
+        divCartasComputadorImgs.append( imgCarta );
+
+        if ( puntosMinimos > 21 ) {
+            break;
+        }
+
+
+    } while ( ( puntosComputador < puntosMinimos ) && ( puntosMinimos <= 21 ) );
+
+
+    setTimeout(() => {
+        if ( puntosMinimos === puntosComputador ) {
+            alert('Hubo un empate')
+        } else if ( puntosMinimos > 21 ) {
+            alert('Dealer gana')
+    
+        } else if ( puntosComputador > 21) {
+            alert('Ganaste!!');
+        }  else {
+            alert('Dealer gana');
+        }
+    }, 10);
+
+    
+
+}
+
 
 // Eventos
 btnPedir.addEventListener('click', () => {
@@ -82,19 +120,29 @@ btnPedir.addEventListener('click', () => {
     smallPuntosUsuario.textContent = puntosUsuario + ' pts';
     const imgCarta = document.createElement('img');
     imgCarta.src = `assets/cartas/${ carta }.png`
-    imgCarta.className = 'carta';
-    // imgCarta.classList.add('carta');
+    imgCarta.className = 'carta'; // imgCarta.classList.add('carta');
+    divCartasUsuarioImgs.append(imgCarta);
 
     if ( puntosUsuario > 21) {
         console.warn('Lo siento mucho, perdiste');
         btnPedir.disabled = true;
+        btnParar.disabled = true;
+        turnoComputadora(puntosUsuario);
     } else if ( puntosUsuario === 21 ) {
         console.warn('21, ganaste')
         btnPedir.disabled = true;
+        btnParar.disabled = true;
+        turnoComputadora(puntosUsuario);
     }
 
-    divCartasUsuarioImgs.append(imgCarta);
+    
 
 });
 
+btnParar.addEventListener('click', () => {
 
+    btnParar.disabled = true;
+    btnPedir.disabled = true;
+    turnoComputadora(puntosUsuario);
+
+});
