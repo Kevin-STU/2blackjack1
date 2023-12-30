@@ -9,6 +9,11 @@ let baraja          = [];
 const letras        = ['C', 'D', 'H', 'S'];
 const especiales    = ['A', 'J', 'K', 'Q'];
 
+// Referencias del HTML
+const btnPedir = document.querySelector('#btnPedir');
+let puntosUsuario = 0,
+    puntosComputador = 0;
+const smallPuntosUsuario = document.querySelector('#smallUsuario'); 
 
 // Función para la creación de una nueva baraja
 const crearBaraja = () => {
@@ -65,3 +70,13 @@ const valorCarta = (carta) => {
 const valor = valorCarta( pedirCarta() );
 console.log(valor);
 
+
+// Eventos
+btnPedir.addEventListener('click', () => {
+
+    const carta = pedirCarta();
+    puntosUsuario = puntosUsuario + valorCarta( carta );
+    console.log(puntosUsuario);
+    smallPuntosUsuario.textContent = puntosUsuario + ' pts';
+
+});
