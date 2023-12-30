@@ -11,13 +11,15 @@ const especiales    = ['A', 'J', 'K', 'Q'];
 
 // Referencias del HTML
 const btnPedir = document.querySelector('#btnPedir');
+const btnParar = document.querySelector('#btnParar');
+const btnNuevoGame = document.querySelector('#btnNuevo');
 let puntosUsuario = 0,
     puntosComputador = 0;
 const smallPuntosUsuario = document.querySelector('#smallUsuario'); 
 const smallPuntosComputador = document.querySelector('#smallComputador'); 
 const divCartasUsuarioImgs = document.querySelector('#jugador-cartas');
 const divCartasComputadorImgs = document.querySelector('#computador-cartas');
-const btnParar = document.querySelector('#btnParar');
+
 
 // Función para la creación de una nueva baraja
 const crearBaraja = () => {
@@ -35,7 +37,6 @@ const crearBaraja = () => {
     }
 
     baraja = _.shuffle(baraja); // barajear
-    console.log(baraja);
     return baraja;
 }
 
@@ -62,7 +63,7 @@ const pedirCarta = () => {
     return carta;
 }
 
-pedirCarta();
+// pedirCarta();
 
 // Función para saber qué valor tiene una carta
 
@@ -71,8 +72,7 @@ const valorCarta = (carta) => {
 
     return (!isNaN(valor)) ? valor * 1 : (valor === 'A') ? 11 : 10; // Retorna los puntos dependiendo de si es un valor númerico o una letra.
 }
-const valor = valorCarta( pedirCarta() );
-console.log(valor);
+
 
 const turnoComputadora = ( puntosMinimos ) => {
 
@@ -144,5 +144,22 @@ btnParar.addEventListener('click', () => {
     btnParar.disabled = true;
     btnPedir.disabled = true;
     turnoComputadora(puntosUsuario);
+
+});
+
+btnNuevoGame.addEventListener('click', () => {
+    baraja = [];
+    baraja = crearBaraja();
+    btnParar.disabled = false;
+    btnPedir.disabled = false;
+    puntosUsuario = 0;
+    puntosComputador = 0;
+
+    smallPuntosUsuario.textContent = 0 + ' pts'
+    smallPuntosComputador.textContent = 0 + ' pts'
+    divCartasUsuarioImgs.innerHTML = '';
+    divCartasComputadorImgs.innerHTML = '';
+
+
 
 });
